@@ -1,0 +1,17 @@
+importers:
+  .:
+    devDependencies:
+      typescript: 3.8.2
+    specifiers:
+      typescript: ^3.8.2
+  packages/routes:
+    specifiers: {}
+lockfileVersion: 5.1
+packages:
+  /typescript/3.8.2:
+    dev: true
+    engines:
+      node: '>=4.2.0'
+    hasBin: true
+    resolution:
+      integrity: sha512-EgOVgL/4xfVrCMbhYKUQTdF37SQn4Iw73H5BgCrF1Abdun7Kwy/QZsE/ssAy0y4LxBbvua3PIbFsbRczWWnDdQ==

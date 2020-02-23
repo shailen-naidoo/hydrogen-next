@@ -1,0 +1,22 @@
+{
+  "name": "hydrogen-next",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hydrogenjs/hydrogen-next.git"
+  },
+  "author": "Shailen Naidoo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hydrogenjs/hydrogen-next/issues"
+  },
+  "homepage": "https://github.com/hydrogenjs/hydrogen-next#readme",
+  "devDependencies": {
+    "typescript": "^3.8.2"
+  }
+}
