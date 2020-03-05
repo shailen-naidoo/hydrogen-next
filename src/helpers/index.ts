@@ -14,15 +14,13 @@ async function importScript(filePath: string) {
 }
 
 async function findAllFilesThatMatch(pattern: string): Promise<string[]> {
-  return new Promise((resolve, reject) => {
-    glob(pattern, (err, matches) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(matches)
-      }
-    })
-  })
+  return new Promise((resolve, reject) => glob(pattern, (err, matches) => {
+    if (err) {
+      reject(err)
+    } else {
+      resolve(matches)
+    }
+  }))
 }
 
 export { importScript, findAllFilesThatMatch }
