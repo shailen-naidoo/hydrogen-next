@@ -3,7 +3,7 @@ import glob from 'glob'
 
 const CWD = process.cwd()
 
-async function importScript(filePath: string) {
+async function importTemplate(filePath: string) {
   const normalizedFilePath = normalize(`${CWD}/${filePath}`)
 
   const module = await import(normalizedFilePath)
@@ -16,7 +16,17 @@ async function importScript(filePath: string) {
     delete module.default
   }
 
-  return template
+  const fileNameWithExtension = filePath.split('/').pop()
+  const fileNameWithoutExtension = fileNameWithExtension?.split('.').shift()
+
+  return { 
+    template,
+    meta: {
+      filePath,
+      fileNameWithExtension,
+      fileNameWithoutExtension,
+    },
+  }
 }
 
 async function findAllFilesThatMatch(pattern: string): Promise<string[]> {
@@ -29,4 +39,4 @@ async function findAllFilesThatMatch(pattern: string): Promise<string[]> {
   }))
 }
 
-export { importScript, findAllFilesThatMatch }
+export { importTemplate, findAllFilesThatMatch }

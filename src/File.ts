@@ -1,4 +1,4 @@
-import { importScript, findAllFilesThatMatch } from './helpers'
+import { importTemplate, findAllFilesThatMatch } from './helpers'
 
 interface PageTemplate {
   layout: string;
@@ -14,19 +14,31 @@ async function getTemplatesFrom(folder: string = '') {
 
   const templates = await findAllFilesThatMatch(pattern)
 
-  return Promise.all(templates.map(importScript))
+  return Promise.all(templates.map(importTemplate))
 }
 
-async function getPageTemplates(): Promise<PageTemplate[]> {
+async function getPageTemplates(): Promise<{ template: PageTemplate }[]> {
   const templates = await getTemplatesFrom('pages')
 
   return templates.map((template) => ({
-    ...template
+    ...template,
+    meta: {
+      ...template.meta,
+      templateType: 'page',
+    }
   }))
 }
 
-async function getLayoutTemplates(): Promise<LayoutTemplate[]> {
-  return getTemplatesFrom('layouts')
+async function getLayoutTemplates(): Promise<{ template: LayoutTemplate }[]> {
+  const templates = await getTemplatesFrom('layouts')
+
+  return templates.map((template) => ({
+    ...template,
+    meta: {
+      ...template.meta,
+      templateType: 'layout',
+    }
+  }))
 }
 
 getLayoutTemplates().then(console.log)
