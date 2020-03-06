@@ -8,9 +8,15 @@ async function importScript(filePath: string) {
 
   const module = await import(normalizedFilePath)
 
-  delete module.default
+  let template = module
 
-  return module
+  if (typeof module.default === 'function') {
+    template = module.default
+  } else {
+    delete module.default
+  }
+
+  return template
 }
 
 async function findAllFilesThatMatch(pattern: string): Promise<string[]> {
