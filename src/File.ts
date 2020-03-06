@@ -7,7 +7,23 @@ interface PageTemplate {
   head: () => object[];
 }
 
-type LayoutTemplate = () => string;
+interface Meta {
+  filePath: string;
+  fileNameWithExtension: string | undefined;
+  fileNameWithoutExtension: string | undefined;
+  layoutToUse: string | null;
+  templateType: string;
+}
+
+interface Page {
+  template: PageTemplate;
+  meta: Meta;
+}
+
+interface Layout {
+  template: () => string;
+  meta: Meta;
+}
 
 async function getTemplatesFrom(folder: string = '') {
   const pattern = `${folder}/**/*.js`
@@ -17,7 +33,7 @@ async function getTemplatesFrom(folder: string = '') {
   return Promise.all(templates.map(importTemplate))
 }
 
-async function getPageTemplates(): Promise<{ template: PageTemplate }[]> {
+async function getPageTemplates(): Promise<Page[]> {
   const templates = await getTemplatesFrom('pages')
 
   return templates.map((template) => ({
@@ -29,7 +45,7 @@ async function getPageTemplates(): Promise<{ template: PageTemplate }[]> {
   }))
 }
 
-async function getLayoutTemplates(): Promise<{ template: LayoutTemplate }[]> {
+async function getLayoutTemplates(): Promise<Layout[]> {
   const templates = await getTemplatesFrom('layouts')
 
   return templates.map((template) => ({
@@ -41,10 +57,12 @@ async function getLayoutTemplates(): Promise<{ template: LayoutTemplate }[]> {
   }))
 }
 
-getLayoutTemplates().then(console.log)
-getPageTemplates().then(console.log)
+function getLayoutAndPageTemplates() {
+  return Promise.all([getLayoutTemplates(), getPageTemplates()])
+}
 
 export {
-  getLayoutTemplates,
-  getPageTemplates,
+  getLayoutAndPageTemplates,
+  Page,
+  Layout,
 }

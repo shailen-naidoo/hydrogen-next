@@ -9,11 +9,13 @@ async function importTemplate(filePath: string) {
   const module = await import(normalizedFilePath)
 
   let template = module
+  let layoutToUse = null
 
   if (typeof module.default === 'function') {
     template = module.default
   } else {
     delete module.default
+    layoutToUse = (template?.layout || 'default')
   }
 
   const fileNameWithExtension = filePath.split('/').pop()
@@ -25,6 +27,7 @@ async function importTemplate(filePath: string) {
       filePath,
       fileNameWithExtension,
       fileNameWithoutExtension,
+      layoutToUse,
     },
   }
 }
